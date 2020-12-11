@@ -1,0 +1,11 @@
+---
+- name: install MRTG v1.0
+  hosts: mrtgservers
+  remote_user: root
+
+  tasks:
+  - name: install mrtg v1.0
+    unarchive:
+      src: https://github.com/oetiker/mrtg/archive/1.0.tar.gz
+      dest: /root
+      remote_src: yes

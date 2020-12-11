@@ -1,0 +1,2 @@
+[mrtgservers]
+mrtg-v1  ansible_connection=lxd
