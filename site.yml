@@ -50,4 +50,5 @@
    shell:
      cmd: mrtg mrtg.cfg
    environment:
-     LD_PRELOAD=/usr/local/lib/libfaketime.so.1
+     LD_PRELOAD=/usr/local/lib/libfaketime.so.1 FAKETIME="-15d"
+     # See https://github.com/wolfcw/libfaketime
