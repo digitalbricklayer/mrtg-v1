@@ -14,9 +14,32 @@
     copy:
       src: "{{ playbook_dir }}/snmpget"
       dest: /usr/local/bin
-      mode: u+rwx,g-rx,o-rx
+      mode: u+rwx,g+rx,o+rx
 
   - name: install netppm
     apt:
       name: netpbm
       state: present
+
+  - name: create output directory
+    file:
+      path: /root/output
+      state: directory
+
+  - name: update WorkDir in mrtg config
+    lineinfile:
+      path: /root/mrtg-1.0/mrtg.cfg
+      regexp: '^WorkDir:'
+      line: "WorkDir: /root/output"
+
+  - name: update snmpget in mrtg config
+    lineinfile:
+      path: /root/mrtg-1.0/mrtg.cfg
+      regexp: '^snmpget:'
+      line: "snmpget: /usr/local/bin/snmpget"
+
+  - name: update ppmtogif in mrtg config
+    lineinfile:
+      path: /root/mrtg-1.0/mrtg.cfg
+      regexp: '^ppmtogif:'
+      line: "ppmtogif: /usr/bin/ppmtogif"
