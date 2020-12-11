@@ -45,3 +45,9 @@
       path: /root/mrtg-1.0/mrtg.cfg
       regexp: '^ppmtogif:'
       line: "ppmtogif: /usr/bin/ppmtogif"
+      
+ - name: execute mrtg
+   shell:
+     cmd: mrtg mrtg.cfg
+   environment:
+     LD_PRELOAD=/usr/local/lib/libfaketime.so.1
