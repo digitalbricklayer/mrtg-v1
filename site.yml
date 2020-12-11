@@ -9,3 +9,14 @@
       src: https://github.com/oetiker/mrtg/archive/1.0.tar.gz
       dest: /root
       remote_src: yes
+
+  - name: install fake snmpget
+    copy:
+      src: "{{ playbook_dir }}/snmpget"
+      dest: /usr/local/bin
+      mode: u+rwx,g-rx,o-rx
+
+  - name: install netppm
+    apt:
+      name: netpbm
+      state: present
