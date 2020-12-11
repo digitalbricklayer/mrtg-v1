@@ -16,9 +16,11 @@
       dest: /usr/local/bin
       mode: u+rwx,g+rx,o+rx
 
-  - name: install netppm
+  - name: install dependencies
     apt:
-      name: netpbm
+      pkg:
+      - netpbm
+      - libfaketime
       state: present
 
   - name: create output directory
