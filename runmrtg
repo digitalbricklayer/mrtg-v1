@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Execute MRTG to build a history     
+#mrtg mrtg.cfg
+#   environment:
+#     LD_PRELOAD=/usr/local/lib/libfaketime.so.1 FAKETIME="-15d"
+# See https://github.com/wolfcw/libfaketime
+lxc exec mrtg-v1 -- LD_PRELOAD=/usr/local/lib/libfaketime.so.1 FAKETIME="-15d" date
