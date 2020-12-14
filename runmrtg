@@ -2,5 +2,5 @@
 
 # Execute MRTG to build a history     
 #mrtg mrtg.cfg
-lxc exec mrtg-v1 -- faketime -15d date
-lxc exec mrtg-v1 -- faketime -15d "perl -MPOSIX -le 'print strftime "%F", localtime'"
+lxc exec mrtg-v1 -- faketime -f -15d date
+lxc exec mrtg-v1 -- faketime -f -15d perl -MPOSIX -le 'print strftime "%F", localtime'
