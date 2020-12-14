@@ -28,6 +28,17 @@
       path: /root/output
       state: directory
 
+  - name: create fake mib
+    file:
+      path: /root/fakemib.txt
+      state: touch
+
+  - name: fix mrtg shebang
+    lineinfile:
+      path: /root/mrtg-1.0/mrtg
+      regexp: '#!/usr/local/bin/perl5'
+      line: "#!/usr/bin/perl"
+
   - name: update WorkDir in mrtg config
     lineinfile:
       path: /root/mrtg-1.0/mrtg.cfg
@@ -45,4 +56,10 @@
       path: /root/mrtg-1.0/mrtg.cfg
       regexp: '^ppmtogif:'
       line: "ppmtogif: /usr/bin/ppmtogif"
+
+  - name: update mibfile in mrtg config
+    lineinfile:
+      path: /root/mrtg-1.0/mrtg.cfg
+      regexp: '^mibfile:'
+      line: "mibfile: /root/fakemib.txt"
  

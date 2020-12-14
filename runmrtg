@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-
 # Execute MRTG to build a history     
-#mrtg mrtg.cfg
-lxc exec mrtg-v1 -- faketime -f -15d date
-lxc exec mrtg-v1 -- faketime -f -15d perl -MPOSIX -le 'print strftime "%F", localtime'
+
+# Clean the output directory from the last run
+lxc exec mrtg-v1 -- rm -rf /root/output/*
+lxc exec mrtg-v1 -- \
+    faketime -f "-5y i300.0" bash -c \
+        'for ((i=0; i<105120; i=i+1)) do /root/mrtg-1.0/mrtg /root/mrtg-1.0/mrtg.cfg; printf "."; done'
+
+# Download the output to the host
