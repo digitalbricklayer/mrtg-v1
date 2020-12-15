@@ -46,7 +46,7 @@
     lineinfile:
       path: "{{ install_dir }}/mrtg.cfg"
       regexp: '^WorkDir:'
-      line: "WorkDir: /root/output"
+      line: "WorkDir: {{ output_dir }}"
 
   - name: update snmpget in mrtg config
     lineinfile:

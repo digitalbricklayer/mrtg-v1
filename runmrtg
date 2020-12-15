@@ -7,11 +7,12 @@ CONTAINER_NAME="mrtg-v1"
 
 # Clean the output directory from the last run
 lxc exec $CONTAINER_NAME -- rm -rf $OUTPUT_DIR/*
+rm -rf ~/Desktop/mrtg/*
 
 # Go through a time machine running mrtg every five minutes
 lxc exec $CONTAINER_NAME -- \
     faketime -f "-5y i300.0" bash -c \
-        'for ((i=0; i<105120; i=i+1)) do $MRTG_DIR/mrtg $MRTG_DIR/mrtg.cfg; printf "."; done'
+        "for ((i=0; i<10; i=i+1)) do $MRTG_DIR/mrtg $MRTG_DIR/mrtg.cfg; printf '.'; done"
 
 # Download the output to the host
-lxc file pull --recursive $CONTAINER_NAME/$OUTPUT_DIR/ ~/Desktop/mrtg
+lxc file pull --recursive $CONTAINER_NAME/$OUTPUT_DIR ~/Desktop/mrtg
