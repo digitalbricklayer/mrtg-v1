@@ -15,4 +15,4 @@ lxc exec $CONTAINER_NAME -- \
         "for ((i=0; i<10; i=i+1)) do $MRTG_DIR/mrtg $MRTG_DIR/mrtg.cfg; printf '.'; done"
 
 # Download the output to the host
-lxc file pull --recursive $CONTAINER_NAME/$OUTPUT_DIR ~/Desktop/mrtg
+lxc file pull --recursive $CONTAINER_NAME$OUTPUT_DIR ~/Desktop/mrtg
