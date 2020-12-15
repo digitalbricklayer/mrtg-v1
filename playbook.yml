@@ -2,12 +2,15 @@
 - name: install MRTG v1.0
   hosts: mrtgservers
   remote_user: root
+  vars:
+    install_dir: "/usr/mrtg-1.0"
+    output_dir: "{{ install_dir }}/output"
 
   tasks:
   - name: install mrtg v1.0
     unarchive:
       src: https://github.com/oetiker/mrtg/archive/1.0.tar.gz
-      dest: /root
+      dest: /usr
       remote_src: yes
 
   - name: install fake snmpget
@@ -25,7 +28,7 @@
 
   - name: create output directory
     file:
-      path: /root/output
+      path: "{{ output_dir }}"
       state: directory
 
   - name: create fake mib
@@ -35,31 +38,31 @@
 
   - name: fix mrtg shebang
     lineinfile:
-      path: /root/mrtg-1.0/mrtg
+      path: "{{ install_dir }}/mrtg"
       regexp: '#!/usr/local/bin/perl5'
       line: "#!/usr/bin/perl"
 
   - name: update WorkDir in mrtg config
     lineinfile:
-      path: /root/mrtg-1.0/mrtg.cfg
+      path: "{{ install_dir }}/mrtg.cfg"
       regexp: '^WorkDir:'
       line: "WorkDir: /root/output"
 
   - name: update snmpget in mrtg config
     lineinfile:
-      path: /root/mrtg-1.0/mrtg.cfg
+      path: "{{ install_dir }}/mrtg.cfg"
       regexp: '^snmpget:'
       line: "snmpget: /usr/local/bin/snmpget"
 
   - name: update ppmtogif in mrtg config
     lineinfile:
-      path: /root/mrtg-1.0/mrtg.cfg
+      path: "{{ install_dir }}/mrtg.cfg"
       regexp: '^ppmtogif:'
       line: "ppmtogif: /usr/bin/ppmtogif"
 
   - name: update mibfile in mrtg config
     lineinfile:
-      path: /root/mrtg-1.0/mrtg.cfg
+      path: "{{ install_dir }}/mrtg.cfg"
       regexp: '^mibfile:'
       line: "mibfile: /root/fakemib.txt"
  
