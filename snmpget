@@ -1,8 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Pretend to interact with a SNMP device and return dummy data
+# Note: sh must be used because perl uses it when launching using backticks
 
-for var in "${@:5}"
-do
-    echo "$RANDOM"
-done
+#for var in "$@+5"
+#do
+#    echo "$var = Counter32: $RANDOM"
+#done
+
+echo "$5 = Counter32: $(shuf -i 50000-150000 -n 1)"
+echo "$6 = Counter32: $(shuf -i 50000-150000 -n 1)"
+
+exit 0
