@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Execute MRTG to build a history     
+# Execute MRTG to build a history
+# Create the container:
+#      lxc launch images:ubuntu/focal/amd64 mrtg-v1
 
 MRTG_DIR="/usr/mrtg-1.0"
 OUTPUT_DIR="$MRTG_DIR/output"
@@ -9,10 +11,21 @@ CONTAINER_NAME="mrtg-v1"
 lxc exec $CONTAINER_NAME -- rm -rf $OUTPUT_DIR/*
 rm -rf ~/Desktop/mrtg/*
 
+current_epoch=$(date '+%s')
+
 # Go through a time machine running mrtg every five minutes
-lxc exec $CONTAINER_NAME -- \
-    faketime -f "-5y i300.0" bash -c \
-        "for ((i=0; i<10; i=i+1)) do $MRTG_DIR/mrtg $MRTG_DIR/mrtg.cfg; printf '.'; done"
+for i in $(seq --separator=' ' 100)
+do
+    lxc exec $CONTAINER_NAME -- \
+        faketime "$(date -d @$current_epoch +'%Y-%m-%d %H:%M:%S')" bash -c \
+            "$MRTG_DIR/mrtg $MRTG_DIR/mrtg.cfg"
+     printf '.'
+     current_epoch=$((current_epoch+300))
+done
+
+#lxc exec $CONTAINER_NAME -- \
+#    faketime "$(date -d @$current_epoch +'%Y-%m-%d %H:%M:%S')" bash -c \
+#        "for ((i=0; i<10; i=i+1)) do $MRTG_DIR/mrtg $MRTG_DIR/mrtg.cfg; printf '.'; current_epoch=$((current_epoch+300)); done"
 
 # Download the output to the host
 lxc file pull --recursive $CONTAINER_NAME$OUTPUT_DIR ~/Desktop/mrtg
