@@ -23,9 +23,5 @@ do
      current_epoch=$((current_epoch+300))
 done
 
-#lxc exec $CONTAINER_NAME -- \
-#    faketime "$(date -d @$current_epoch +'%Y-%m-%d %H:%M:%S')" bash -c \
-#        "for ((i=0; i<10; i=i+1)) do $MRTG_DIR/mrtg $MRTG_DIR/mrtg.cfg; printf '.'; current_epoch=$((current_epoch+300)); done"
-
 # Download the output to the host
 lxc file pull --recursive $CONTAINER_NAME$OUTPUT_DIR ~/Desktop/mrtg
