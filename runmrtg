@@ -14,7 +14,7 @@ rm -rf ~/Desktop/mrtg/*
 current_epoch=$(date '+%s')
 
 # Go through a time machine running mrtg every five minutes
-for i in $(seq --separator=' ' 100)
+for i in $(seq --separator=' ' 1440)
 do
     lxc exec $CONTAINER_NAME -- \
         faketime "$(date -d @$current_epoch +'%Y-%m-%d %H:%M:%S')" bash -c \
