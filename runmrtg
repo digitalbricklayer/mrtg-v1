@@ -7,7 +7,7 @@ MRTG_DIR="/usr/mrtg-1.0"
 OUTPUT_DIR="$MRTG_DIR/output"
 CONTAINER_NAME="mrtg-v1"
 interval_in_secs=$((5*60))
-num_intervals=$((24*60*60/$interval_in_secs))
+num_intervals=$((5*365*24*60*60/$interval_in_secs))
 
 # Clean the output from the last run
 lxc exec $CONTAINER_NAME -- rm -rf $OUTPUT_DIR/*
